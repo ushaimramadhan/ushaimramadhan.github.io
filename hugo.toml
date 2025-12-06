@@ -1,0 +1,39 @@
+baseURL = 'https://github.com/ushaimramadhan'
+languageCode = 'id-ID'
+title = 'Ushaim Ramadhan' 
+theme = 'PaperMod'
+
+[params]
+    defaultTheme = 'auto'
+    author = 'Ushaim Ramadhan'
+    ShowReadingTime = true
+    
+    # Bagian Profile Mode (Halaman depan jadi kartu nama digital)
+    [params.profileMode]
+    enabled = true
+    title = "Ushaim Ramadhan"
+    subtitle = "Informatics Student | Cyber Security Enthusiast"
+    imageUrl = "https://github.com/ushaimramadhan.png" # Foto profil GitHub otomatis
+    imageWidth = 120
+    imageHeight = 120
+
+    # Menampilkan link sosial media di halaman depan
+    [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/ushaimramadhan"
+    [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/ushaimramadhan"
+
+# Menu Navigasi (Supaya ada pemisah jelas)
+[menu]
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/posts/"
+    weight = 10
+  [[menu.main]]
+    identifier = "projects"
+    name = "Projects" # Persiapan masa depan
+    url = "/projects/"
+    weight = 20
