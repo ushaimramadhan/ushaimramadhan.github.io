@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Ushaim Ramadhan</title>
+    <link>http://localhost:1313/ushaimramadhan/</link>
+    <description>Recent content on Ushaim Ramadhan</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>id-ID</language>
+    <lastBuildDate>Sun, 07 Dec 2025 13:00:00 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/ushaimramadhan/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Membangun Blog Pribadi Gratis &amp; Cepat dengan Hugo &#43; GitHub Pages</title>
+      <link>http://localhost:1313/ushaimramadhan/posts/cara-membuat-blog-hugo-github/</link>
+      <pubDate>Sun, 07 Dec 2025 13:00:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/posts/cara-membuat-blog-hugo-github/</guid>
+      <description>&lt;p&gt;Sebagai mahasiswa IT, memiliki dokumentasi pribadi itu penting. Awalnya saya bingung mau pakai apa: Wordpress? Blogger? Atau coding manual HTML/CSS?&lt;/p&gt;
+&lt;p&gt;Akhirnya pilihan saya jatuh pada &lt;strong&gt;Hugo&lt;/strong&gt; dan &lt;strong&gt;GitHub Pages&lt;/strong&gt;. Kenapa? Karena gratis, super cepat, aman (karena statis), dan terlihat &amp;ldquo;geeky&amp;rdquo; karena kita mengelolanya lewat terminal dan Git.&lt;/p&gt;
+&lt;p&gt;Di artikel ini, saya akan berbagi langkah-langkah bagaimana website ini dibuat, mulai dari instalasi hingga troubleshooting error saat deployment.&lt;/p&gt;
+&lt;h2 id=&#34;apa-itu-hugo&#34;&gt;Apa itu Hugo?&lt;/h2&gt;
+&lt;p&gt;Singkatnya, Hugo adalah &lt;em&gt;Static Site Generator&lt;/em&gt; (SSG) yang ditulis menggunakan bahasa Go (Golang). Bedanya dengan Wordpress, Hugo tidak butuh database. Dia mengubah tulisan Markdown kita menjadi file HTML statis dalam hitungan milidetik.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Cara Saya Menghafal Vocab: Otomatisasi Anki dengan Python &amp; Ollama CLI</title>
+      <link>http://localhost:1313/ushaimramadhan/posts/otomatisasi-anki-ollama/</link>
+      <pubDate>Sat, 06 Dec 2025 13:00:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/posts/otomatisasi-anki-ollama/</guid>
+      <description>&lt;p&gt;Sebagai mahasiswa IT, saya sering menemukan kosakata teknis baru. Masalahnya, memasukkan kosakata tersebut ke &lt;strong&gt;Anki&lt;/strong&gt; satu per satu sangat membosankan. Saya harus mencari arti, mencari contoh kalimat umum, dan mencari konteks IT-nya secara manual.&lt;/p&gt;
+&lt;p&gt;Solusi saya? &lt;strong&gt;Otomatisasi.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Saya membuat sistem sederhana di mana saya cukup mengetik perintah &lt;code&gt;vocab&lt;/code&gt; di terminal, memasukkan kata yang ingin dipelajari, dan biarkan AI yang mengurus sisanya hingga masuk ke Anki.&lt;/p&gt;
+&lt;p&gt;Berikut adalah dokumentasi cara saya membangun alat ini menggunakan &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;Ollama (Local LLM)&lt;/strong&gt;, dan &lt;strong&gt;PowerShell&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

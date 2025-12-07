@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/ushaimramadhan/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=ushaimramadhan/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Membangun Blog Pribadi Gratis &amp; Cepat dengan Hugo &#43; GitHub Pages | Ushaim Ramadhan</title>
+<meta name="keywords" content="Hugo, GitHub Pages, Tutorial, Web Development">
+<meta name="description" content="Sebagai mahasiswa IT, memiliki dokumentasi pribadi itu penting. Awalnya saya bingung mau pakai apa: Wordpress? Blogger? Atau coding manual HTML/CSS?
+Akhirnya pilihan saya jatuh pada Hugo dan GitHub Pages. Kenapa? Karena gratis, super cepat, aman (karena statis), dan terlihat &ldquo;geeky&rdquo; karena kita mengelolanya lewat terminal dan Git.
+Di artikel ini, saya akan berbagi langkah-langkah bagaimana website ini dibuat, mulai dari instalasi hingga troubleshooting error saat deployment.
+Apa itu Hugo?
+Singkatnya, Hugo adalah Static Site Generator (SSG) yang ditulis menggunakan bahasa Go (Golang). Bedanya dengan Wordpress, Hugo tidak butuh database. Dia mengubah tulisan Markdown kita menjadi file HTML statis dalam hitungan milidetik.">
+<meta name="author" content="Ushaim Ramadhan">
+<link rel="canonical" href="http://localhost:1313/ushaimramadhan/posts/cara-membuat-blog-hugo-github/">
+<link crossorigin="anonymous" href="/ushaimramadhan/assets/css/stylesheet.fd5566c526ae48aadabd950798a2dc3568536401560eae5caac3765a42a9e7b5.css" integrity="sha256-/VVmxSauSKravZUHmKLcNWhTZAFWDq5cqsN2WkKp57U=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/ushaimramadhan/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/ushaimramadhan/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/ushaimramadhan/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/ushaimramadhan/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/ushaimramadhan/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/ushaimramadhan/posts/cara-membuat-blog-hugo-github/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/ushaimramadhan/" accesskey="h" title="Ushaim Ramadhan (Alt + H)">Ushaim Ramadhan</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/ushaimramadhan/posts/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/ushaimramadhan/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Membangun Blog Pribadi Gratis &amp; Cepat dengan Hugo &#43; GitHub Pages
+    </h1>
+    <div class="post-meta"><span title='2025-12-07 13:00:00 +0700 +07'>December 7, 2025</span>&nbsp;·&nbsp;<span>4 min</span>&nbsp;·&nbsp;<span>Ushaim Ramadhan</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Sebagai mahasiswa IT, memiliki dokumentasi pribadi itu penting. Awalnya saya bingung mau pakai apa: Wordpress? Blogger? Atau coding manual HTML/CSS?</p>
+<p>Akhirnya pilihan saya jatuh pada <strong>Hugo</strong> dan <strong>GitHub Pages</strong>. Kenapa? Karena gratis, super cepat, aman (karena statis), dan terlihat &ldquo;geeky&rdquo; karena kita mengelolanya lewat terminal dan Git.</p>
+<p>Di artikel ini, saya akan berbagi langkah-langkah bagaimana website ini dibuat, mulai dari instalasi hingga troubleshooting error saat deployment.</p>
+<h2 id="apa-itu-hugo">Apa itu Hugo?<a hidden class="anchor" aria-hidden="true" href="#apa-itu-hugo">#</a></h2>
+<p>Singkatnya, Hugo adalah <em>Static Site Generator</em> (SSG) yang ditulis menggunakan bahasa Go (Golang). Bedanya dengan Wordpress, Hugo tidak butuh database. Dia mengubah tulisan Markdown kita menjadi file HTML statis dalam hitungan milidetik.</p>
+<h2 id="langkah-1-instalasi--setup">Langkah 1: Instalasi &amp; Setup<a hidden class="anchor" aria-hidden="true" href="#langkah-1-instalasi--setup">#</a></h2>
+<p>Hal pertama yang saya lakukan adalah menginstall Hugo di laptop windows melalui terminal.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>winget install Hugo.Hugo.Extended
+</span></span></code></pre></div><p>Kemudian saya membuat situs baru dengan membuka terminal di folder tempat saya menyimpan projek, dengan perintah:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site my-blog
+</span></span><span style="display:flex;"><span>cd my-blog
+</span></span></code></pre></div><p>Untuk tampilan, saya memilih tema PaperMod karena tampilannya yang minimalis, bersih, dan sangat populer di kalangan developer.</p>
+<p>Selanjutnya saya inisialisasi Git pada folder projek ini.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git init
+</span></span></code></pre></div><p>Dilanjutkan dengan mendownload tema (PaperMod).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule add --depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
+</span></span></code></pre></div><p>Lalu kita konfigurasi dasar pada file hugo.taml dengan menggunakan teks editor (VS Code atau Notepad). Berikut isinya:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>baseURL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://ushaimramadhan.github.io/&#39;</span> <span style="color:#75715e"># ini bisa Anda isi dengan username github masing-masing</span>
+</span></span><span style="display:flex;"><span>languageCode <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;id-ID&#39;</span>
+</span></span><span style="display:flex;"><span>title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Ushaim Ramadhan&#39;</span> <span style="color:#75715e"># bisa disesuaikan dengan kemauan Anda</span>
+</span></span><span style="display:flex;"><span>theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;PaperMod&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>params<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>defaultTheme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;auto&#39;</span>
+</span></span><span style="display:flex;"><span>author <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Nama Anda&#39;</span>
+</span></span><span style="display:flex;"><span>ShowReadingTime <span style="color:#f92672">=</span> true
+</span></span><span style="display:flex;"><span>ShowShareButtons <span style="color:#f92672">=</span> true
+</span></span></code></pre></div><h2 id="langkah-2-tes-lokal-localhost">Langkah 2: Tes Lokal (Localhost)<a hidden class="anchor" aria-hidden="true" href="#langkah-2-tes-lokal-localhost">#</a></h2>
+<p>Sebelum online, kita cek dulu di laptop. Jalankan server lokal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -D <span style="color:#75715e"># -D artinya menampilkan juga yang statusnya masih &#39;Draft&#39;</span>
+</span></span></code></pre></div><p>Lalu buka browser dan akses alamat yang muncul di terminal, biasanya:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>http://localhost:1313/
+</span></span></code></pre></div><p>Jika Anda melihat halaman putih dengan tulisan &ldquo;my-blog&rdquo; (atau judul yang Anda buat), berarti BERHASIL! Kerangka blog sudah jadi!</p>
+<h2 id="langkah-3-membuat-isi">Langkah 3: Membuat isi<a hidden class="anchor" aria-hidden="true" href="#langkah-3-membuat-isi">#</a></h2>
+<p>Jangan matikan terminal server tadi. Buka tab terminal baru. Lalu buat file untuk menyimpan isi.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new posts/otomatisasi-anki-python.md <span style="color:#75715e"># Sesuaikan namanya dengan kemauan Anda</span>
+</span></span></code></pre></div><p>Buka file <code>content/posts/otomatisasi-anki-python.md</code> di editor. Anda akan melihat &ldquo;Front Matter&rdquo; di bagian atas (di antara tanda +++ atau &mdash;). Ubah draft: true menjadi draft: false.</p>
+<p>Lalu mulailah menulis isi konten Anda di bawahnya menggunakan format Markdown.</p>
+<p>Contoh isi:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>title: <span style="color:#e6db74">&#34;Otomatisasi Kartu Anki dengan Python dan Ollama&#34;</span>
+</span></span><span style="display:flex;"><span>date: 2023-12-06T12:00:00+07:00
+</span></span><span style="display:flex;"><span>draft: false
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Latar Belakang</span>
+</span></span><span style="display:flex;"><span>Saya sering merasa malas input vocab satu per satu...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Solusi</span>
+</span></span><span style="display:flex;"><span>Menggunakan script Python sederhana...
+</span></span></code></pre></div><p>Selanjutnya cek browser (localhost), artikelnya harusnya otomatis muncul! Selamat Anda sudah berhasil membuat website!</p>
+<h2 id="langkah-4-hosting-gratis-di-github-pages">Langkah 4: Hosting Gratis di GitHub Pages<a hidden class="anchor" aria-hidden="true" href="#langkah-4-hosting-gratis-di-github-pages">#</a></h2>
+<p>Ini bagian paling menarik. Kita tidak perlu beli hosting mahal. Cukup upload kode ke GitHub, dan fitur GitHub Pages akan menayangkannya secara gratis.</p>
+<p>Saya menggunakan GitHub Actions untuk otomatisasi. Jadi, setiap kali saya menulis artikel di laptop dan melakukan git push, GitHub akan otomatis:</p>
+<ul>
+<li>
+<p>Mendeteksi perubahan.</p>
+</li>
+<li>
+<p>Membangun (build) web menggunakan Hugo.</p>
+</li>
+<li>
+<p>Menerbitkannya ke publik.</p>
+</li>
+</ul>
+<h2 id="tantangan-mengatasi-error-deployment">Tantangan: Mengatasi Error Deployment<a hidden class="anchor" aria-hidden="true" href="#tantangan-mengatasi-error-deployment">#</a></h2>
+<p>Tentu saja, tidak ada coding yang mulus tanpa error. Saat pertama kali mencoba deploy, saya mengalami kegagalan di GitHub Actions.</p>
+<p>Masalah: Workflow GitHub gagal dengan status merah. Ternyata penyebabnya adalah perbedaan versi Hugo. Di file konfigurasi hugo.toml (workflow), versi yang tertulis adalah 0.128.0, sedangkan di laptop saya menggunakan versi terbaru (misal 0.139.0).</p>
+<p>Solusi: Saya harus menyamakan versinya. Saya mengedit file .github/workflows/hugo.yaml dan mengubah bagian HUGO_VERSION agar sesuai dengan versi laptop.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-YAML" data-lang="YAML"><span style="display:flex;"><span><span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">HUGO_VERSION</span>: <span style="color:#ae81ff">0.139.0</span> <span style="color:#75715e"># Sesuaikan dengan versi lokal</span>
+</span></span></code></pre></div><p>Setelah di-commit ulang, indikator GitHub Actions akhirnya berubah menjadi Hijau (Success)!</p>
+<h2 id="kesimpulan">Kesimpulan<a hidden class="anchor" aria-hidden="true" href="#kesimpulan">#</a></h2>
+<p>Membuat blog dengan Hugo mungkin terlihat rumit di awal karena banyak bermain dengan Terminal. Tapi sekali setup selesai, proses menulisnya sangat nyaman. Kita hanya perlu fokus pada konten (Markdown) tanpa pusing memikirkan database atau loading yang lambat.</p>
+<p>Bagi teman-teman mahasiswa IT, saya sangat menyarankan metode ini. Selain punya blog keren, kita juga jadi belajar skill Git dan CI/CD secara tidak langsung.</p>
+<p>Tertarik mencoba? Silakan cek dokumentasi resmi Hugo untuk info lengkap. <a href="https://gohugo.io">kunjungi situs resmi Hugo</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/hugo/">Hugo</a></li>
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/github-pages/">GitHub Pages</a></li>
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/tutorial/">Tutorial</a></li>
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/web-development/">Web Development</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/ushaimramadhan/">Ushaim Ramadhan</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

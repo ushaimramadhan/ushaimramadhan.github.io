@@ -14,16 +14,19 @@ theme = 'PaperMod'
     title = "Ushaim Ramadhan"
     subtitle = "Informatics Student | Cyber Security Enthusiast"
     imageUrl = "https://github.com/ushaimramadhan.png" # Foto profil GitHub otomatis
-    imageWidth = 120
-    imageHeight = 120
+    imageTitle = "Hi there!"
+    imageWidth = 150
+    imageHeight = 150
 
-    # Menampilkan link sosial media di halaman depan
     [[params.socialIcons]]
     name = "github"
     url = "https://github.com/ushaimramadhan"
     [[params.socialIcons]]
     name = "linkedin"
     url = "https://linkedin.com/in/ushaimramadhan"
+    [[params.socialIcons]]
+    name = "email"
+    url = "mailto:adhan1005@gmail.com" 
 
 # Menu Navigasi (Supaya ada pemisah jelas)
 [menu]

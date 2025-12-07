@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><script src="/ushaimramadhan/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=ushaimramadhan/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Cara Saya Menghafal Vocab: Otomatisasi Anki dengan Python &amp; Ollama CLI | Ushaim Ramadhan</title>
+<meta name="keywords" content="Python, PowerShell, Ollama, Anki, Automation">
+<meta name="description" content="Sebagai mahasiswa IT, saya sering menemukan kosakata teknis baru. Masalahnya, memasukkan kosakata tersebut ke Anki satu per satu sangat membosankan. Saya harus mencari arti, mencari contoh kalimat umum, dan mencari konteks IT-nya secara manual.
+Solusi saya? Otomatisasi.
+Saya membuat sistem sederhana di mana saya cukup mengetik perintah vocab di terminal, memasukkan kata yang ingin dipelajari, dan biarkan AI yang mengurus sisanya hingga masuk ke Anki.
+Berikut adalah dokumentasi cara saya membangun alat ini menggunakan Python, Ollama (Local LLM), dan PowerShell.">
+<meta name="author" content="Ushaim Ramadhan">
+<link rel="canonical" href="http://localhost:1313/ushaimramadhan/posts/otomatisasi-anki-ollama/">
+<link crossorigin="anonymous" href="/ushaimramadhan/assets/css/stylesheet.fd5566c526ae48aadabd950798a2dc3568536401560eae5caac3765a42a9e7b5.css" integrity="sha256-/VVmxSauSKravZUHmKLcNWhTZAFWDq5cqsN2WkKp57U=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/ushaimramadhan/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/ushaimramadhan/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/ushaimramadhan/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/ushaimramadhan/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/ushaimramadhan/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/ushaimramadhan/posts/otomatisasi-anki-ollama/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/ushaimramadhan/" accesskey="h" title="Ushaim Ramadhan (Alt + H)">Ushaim Ramadhan</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/ushaimramadhan/posts/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/ushaimramadhan/projects/" title="Projects">
+                    <span>Projects</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Cara Saya Menghafal Vocab: Otomatisasi Anki dengan Python &amp; Ollama CLI
+    </h1>
+    <div class="post-meta"><span title='2025-12-06 13:00:00 +0700 +07'>December 6, 2025</span>&nbsp;·&nbsp;<span>3 min</span>&nbsp;·&nbsp;<span>Ushaim Ramadhan</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Sebagai mahasiswa IT, saya sering menemukan kosakata teknis baru. Masalahnya, memasukkan kosakata tersebut ke <strong>Anki</strong> satu per satu sangat membosankan. Saya harus mencari arti, mencari contoh kalimat umum, dan mencari konteks IT-nya secara manual.</p>
+<p>Solusi saya? <strong>Otomatisasi.</strong></p>
+<p>Saya membuat sistem sederhana di mana saya cukup mengetik perintah <code>vocab</code> di terminal, memasukkan kata yang ingin dipelajari, dan biarkan AI yang mengurus sisanya hingga masuk ke Anki.</p>
+<p>Berikut adalah dokumentasi cara saya membangun alat ini menggunakan <strong>Python</strong>, <strong>Ollama (Local LLM)</strong>, dan <strong>PowerShell</strong>.</p>
+<h2 id="arsitektur-sistem">Arsitektur Sistem<a hidden class="anchor" aria-hidden="true" href="#arsitektur-sistem">#</a></h2>
+<p>Alurnya sederhana namun <em>powerful</em>:</p>
+<ol>
+<li><strong>Terminal:</strong> User mengetik <code>vocab</code> (alias PowerShell).</li>
+<li><strong>Python Script:</strong> Menerima input kata.</li>
+<li><strong>Ollama (AI):</strong> Mencari definisi dan contoh kalimat (Umum &amp; IT).</li>
+<li><strong>AnkiConnect:</strong> Memasukkan hasil generate AI langsung ke database Anki.</li>
+</ol>
+<hr>
+<h2 id="1-otak-sistem-custom-model-ollama">1. Otak Sistem: Custom Model Ollama<a hidden class="anchor" aria-hidden="true" href="#1-otak-sistem-custom-model-ollama">#</a></h2>
+<p>Saya tidak menggunakan model standar mentah-mentah. Saya membuat custom model bernama <code>ankibot</code> (berbasis Llama 3.1) menggunakan <code>Modelfile</code>. Tujuannya agar output AI selalu konsisten dan langsung berformat HTML yang rapi untuk Anki.</p>
+<p>Berikut isi <code>Modelfile</code> saya:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">llama3.1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>SYSTEM <span style="color:#e6db74">&#34;You are an English teacher assistant meant to help create Anki flashcards. When I give you a word, you MUST respond with exactly this format: 1. Indonesian Meaning, 2. A simple daily sentence (English), 3. An IT/Cybersecurity related sentence (English). Keep it concise.&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>Perintah untuk membuat modelnya: ollama create ankibot -f Modelfile.</p>
+<h2 id="2-jembatan-logika-python-script">2. Jembatan Logika: Python Script<a hidden class="anchor" aria-hidden="true" href="#2-jembatan-logika-python-script">#</a></h2>
+<p>Script ini bertugas menjadi perantara. Ia meminta jawaban ke Ollama, lalu &ldquo;melempar&rdquo; jawaban itu ke Anki melalui plugin AnkiConnect (running di port 8765).</p>
+<p>Berikut potongan kode inti dari anki_auto.py:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Konfigurasi</span>
+</span></span><span style="display:flex;"><span>OLLAMA_MODEL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ankibot&#34;</span>
+</span></span><span style="display:flex;"><span>ANKI_DECK_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;My Vocab&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_definition</span>(word):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Sedang meminta Ollama mendefinisikan: &#39;</span><span style="color:#e6db74">{</span>word<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;...&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Prompt meminta format HTML agar rapi di kartu Anki</span>
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Explain the word &#34;</span><span style="color:#e6db74">{</span>word<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34; for a student.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Format output exactly like this in HTML:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;b&gt;Meaning:&lt;/b&gt; [Indonesian Meaning]&lt;br&gt;&lt;br&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;b&gt;Daily Sentence:&lt;/b&gt; &lt;i&gt;[English Sentence]&lt;/i&gt;&lt;br&gt;&lt;br&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &lt;b&gt;IT/Cybersecurity Context:&lt;/b&gt; &lt;i&gt;[Sentence related to tech]&lt;/i&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Request ke Ollama Local</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://localhost:11434/api/generate&#34;</span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;model&#34;</span>: OLLAMA_MODEL, <span style="color:#e6db74">&#34;prompt&#34;</span>: prompt, <span style="color:#e6db74">&#34;stream&#34;</span>: <span style="color:#66d9ef">False</span>}
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, json<span style="color:#f92672">=</span>data)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;response&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">add_to_anki</span>(word, content):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Request ke AnkiConnect</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://localhost:8765&#34;</span>
+</span></span><span style="display:flex;"><span>    note <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;deckName&#34;</span>: ANKI_DECK_NAME,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;modelName&#34;</span>: <span style="color:#e6db74">&#34;Basic&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;fields&#34;</span>: { <span style="color:#e6db74">&#34;Front&#34;</span>: word, <span style="color:#e6db74">&#34;Back&#34;</span>: content },
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;options&#34;</span>: { <span style="color:#e6db74">&#34;allowDuplicate&#34;</span>: <span style="color:#66d9ef">False</span> },
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;tags&#34;</span>: [<span style="color:#e6db74">&#34;ollama_generated&#34;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#34;action&#34;</span>: <span style="color:#e6db74">&#34;addNote&#34;</span>, <span style="color:#e6db74">&#34;version&#34;</span>: <span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#34;params&#34;</span>: { <span style="color:#e6db74">&#34;note&#34;</span>: note } }
+</span></span><span style="display:flex;"><span>    requests<span style="color:#f92672">.</span>post(url, json<span style="color:#f92672">=</span>payload)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Loop Utama</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;--- ANKI AUTO GENERATOR ---&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        target_word <span style="color:#f92672">=</span> input(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Masukkan kata bahasa Inggris: &#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> target_word: <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        definition <span style="color:#f92672">=</span> generate_definition(target_word)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> definition:
+</span></span><span style="display:flex;"><span>            add_to_anki(target_word, definition)
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;✅ Berhasil! Kartu &#39;</span><span style="color:#e6db74">{</span>target_word<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39; masuk ke Anki.&#34;</span>)
+</span></span></code></pre></div><h2 id="shortcut-powershell-function">Shortcut: PowerShell Function<a hidden class="anchor" aria-hidden="true" href="#shortcut-powershell-function">#</a></h2>
+<p>Agar saya tidak perlu membuka folder proyek secara manual setiap kali ingin belajar, saya membuat fungsi alias di PowerShell profile saya.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>function vocab {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Pindah ke folder script</span>
+</span></span><span style="display:flex;"><span>    Push<span style="color:#f92672">-</span>Location <span style="color:#e6db74">&#34;D:\_DATA</span><span style="color:#ae81ff">\02</span><span style="color:#e6db74">_Dokumen\Pribadi\Setup-Otomatisasi&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Jalankan script</span>
+</span></span><span style="display:flex;"><span>    python anki_auto<span style="color:#f92672">.</span>py
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Kembali ke folder asal setelah selesai</span>
+</span></span><span style="display:flex;"><span>    Pop<span style="color:#f92672">-</span>Location
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="hasil-akhir">Hasil Akhir<a hidden class="anchor" aria-hidden="true" href="#hasil-akhir">#</a></h2>
+<p>Sekarang, setiap kali saya menemukan kata asing saat membaca artikel cybersecurity, saya cukup buka terminal, ketik vocab, masukkan katanya, dan selesai.</p>
+<p>Kartu Anki saya sekarang terisi otomatis dengan format:</p>
+<pre><code>Depan: Kata (misal: Phishing)
+
+Belakang: Arti Bahasa Indonesia, Contoh Kalimat Sehari-hari, dan Contoh Kalimat Konteks IT.
+</code></pre>
+<p>Sangat efisien untuk mahasiswa IT yang sibuk!</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/python/">Python</a></li>
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/powershell/">PowerShell</a></li>
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/ollama/">Ollama</a></li>
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/anki/">Anki</a></li>
+      <li><a href="http://localhost:1313/ushaimramadhan/tags/automation/">Automation</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://localhost:1313/ushaimramadhan/">Ushaim Ramadhan</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

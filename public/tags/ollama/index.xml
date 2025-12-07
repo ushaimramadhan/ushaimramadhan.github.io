@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Ollama on Ushaim Ramadhan</title>
+    <link>http://localhost:1313/ushaimramadhan/tags/ollama/</link>
+    <description>Recent content in Ollama on Ushaim Ramadhan</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>id-ID</language>
+    <lastBuildDate>Sat, 06 Dec 2025 13:00:00 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/ushaimramadhan/tags/ollama/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cara Saya Menghafal Vocab: Otomatisasi Anki dengan Python &amp; Ollama CLI</title>
+      <link>http://localhost:1313/ushaimramadhan/posts/otomatisasi-anki-ollama/</link>
+      <pubDate>Sat, 06 Dec 2025 13:00:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/posts/otomatisasi-anki-ollama/</guid>
+      <description>&lt;p&gt;Sebagai mahasiswa IT, saya sering menemukan kosakata teknis baru. Masalahnya, memasukkan kosakata tersebut ke &lt;strong&gt;Anki&lt;/strong&gt; satu per satu sangat membosankan. Saya harus mencari arti, mencari contoh kalimat umum, dan mencari konteks IT-nya secara manual.&lt;/p&gt;
+&lt;p&gt;Solusi saya? &lt;strong&gt;Otomatisasi.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Saya membuat sistem sederhana di mana saya cukup mengetik perintah &lt;code&gt;vocab&lt;/code&gt; di terminal, memasukkan kata yang ingin dipelajari, dan biarkan AI yang mengurus sisanya hingga masuk ke Anki.&lt;/p&gt;
+&lt;p&gt;Berikut adalah dokumentasi cara saya membangun alat ini menggunakan &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;Ollama (Local LLM)&lt;/strong&gt;, dan &lt;strong&gt;PowerShell&lt;/strong&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
