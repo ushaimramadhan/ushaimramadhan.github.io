@@ -6,8 +6,36 @@
     <description>Recent content in Tags on Ushaim Ramadhan</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>id-ID</language>
-    <lastBuildDate>Sun, 07 Dec 2025 13:00:00 +0700</lastBuildDate>
+    <lastBuildDate>Mon, 08 Dec 2025 14:40:00 +0700</lastBuildDate>
     <atom:link href="http://localhost:1313/ushaimramadhan/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Backend</title>
+      <link>http://localhost:1313/ushaimramadhan/tags/backend/</link>
+      <pubDate>Mon, 08 Dec 2025 14:40:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/tags/backend/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Career</title>
+      <link>http://localhost:1313/ushaimramadhan/tags/career/</link>
+      <pubDate>Mon, 08 Dec 2025 14:40:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/tags/career/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Golang</title>
+      <link>http://localhost:1313/ushaimramadhan/tags/golang/</link>
+      <pubDate>Mon, 08 Dec 2025 14:40:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/tags/golang/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>http://localhost:1313/ushaimramadhan/tags/programming/</link>
+      <pubDate>Mon, 08 Dec 2025 14:40:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/tags/programming/</guid>
+      <description></description>
+    </item>
     <item>
       <title>GitHub Pages</title>
       <link>http://localhost:1313/ushaimramadhan/tags/github-pages/</link>

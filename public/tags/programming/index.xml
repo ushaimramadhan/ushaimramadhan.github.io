@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Programming on Ushaim Ramadhan</title>
+    <link>http://localhost:1313/ushaimramadhan/tags/programming/</link>
+    <description>Recent content in Programming on Ushaim Ramadhan</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>id-ID</language>
+    <lastBuildDate>Mon, 08 Dec 2025 14:40:00 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/ushaimramadhan/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Road to Junior Go Developer: Mengapa Saya Memilih Golang?</title>
+      <link>http://localhost:1313/ushaimramadhan/posts/road-to-junior-go-developer-mengapa-saya-memilih-go/</link>
+      <pubDate>Mon, 08 Dec 2025 14:40:00 +0700</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/posts/road-to-junior-go-developer-mengapa-saya-memilih-go/</guid>
+      <description>&lt;p&gt;Halo semuanya! Kembali lagi di blog saya.&lt;/p&gt;
+&lt;p&gt;Pada tulisan kali ini, saya ingin sedikit mendokumentasikan keputusan besar yang saya ambil terkait jalur karier saya di dunia IT.&lt;/p&gt;
+&lt;p&gt;Seperti yang teman-teman tahu (atau mungkin belum tahu), saat ini saya adalah mahasiswa Informatika semester 3. Di perkuliahan, saya sudah sempat mencicipi berbagai bahasa pemrograman, mulai dari &lt;strong&gt;Java&lt;/strong&gt;, &lt;strong&gt;Python&lt;/strong&gt;, &lt;strong&gt;C&lt;/strong&gt;, hingga &lt;strong&gt;Go&lt;/strong&gt;. Tentu saja, pembelajaran di kampus seringkali hanya sampai &amp;ldquo;kulitnya&amp;rdquo; saja.&lt;/p&gt;
+&lt;p&gt;Namun, setelah mencoba-coba, saya akhirnya memutuskan untuk meresmikan &lt;strong&gt;Go (Golang)&lt;/strong&gt; sebagai bahasa utama saya untuk mendalami dunia Backend Development.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

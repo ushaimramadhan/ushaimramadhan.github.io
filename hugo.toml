@@ -12,7 +12,7 @@ theme = 'PaperMod'
     [params.profileMode]
     enabled = true
     title = "Ushaim Ramadhan"
-    subtitle = "Informatics Student | Cyber Security Enthusiast"
+    subtitle = "Informatics Student | Backend Enthusiast"
     imageUrl = "https://github.com/ushaimramadhan.png" # Foto profil GitHub otomatis
     imageTitle = "Hi there!"
     imageWidth = 150
@@ -37,6 +37,6 @@ theme = 'PaperMod'
     weight = 10
   [[menu.main]]
     identifier = "projects"
-    name = "Projects" # Persiapan masa depan
+    name = "Projects" 
     url = "/projects/"
     weight = 20
