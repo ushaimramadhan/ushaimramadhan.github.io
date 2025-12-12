@@ -6,6 +6,14 @@
     <description>Recent content in Projects on Ushaim Ramadhan</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>id-ID</language>
+    <lastBuildDate>Fri, 12 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/ushaimramadhan/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cafe Sales Analysis (UAS Data Science)</title>
+      <link>http://localhost:1313/ushaimramadhan/projects/uas-data-science/</link>
+      <pubDate>Fri, 12 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/ushaimramadhan/projects/uas-data-science/</guid>
+      <description>Penerapan Data Science: Membersihkan &amp;#39;Dirty Dataset&amp;#39; dari Kaggle hingga mencapai akurasi prediksi 91%.</description>
+    </item>
   </channel>
 </rss>
